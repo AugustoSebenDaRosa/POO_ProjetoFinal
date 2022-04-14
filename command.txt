@@ -1,0 +1,7 @@
+NuGet:
+ EntityFrameworkCore.SqlServer
+ EntityFrameworkCore.Design
+
+dotnet tool update --global dotnet -ef
+dotnet ef migrations add CreateDatabase
+dotnet ef database update
