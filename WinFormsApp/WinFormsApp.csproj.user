@@ -7,6 +7,9 @@
     <Compile Update="FormCadastro.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="FormCaixa.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -17,6 +20,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FormPratosAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="ProdutoForm.cs">

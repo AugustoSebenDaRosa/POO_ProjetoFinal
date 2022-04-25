@@ -68,3 +68,5 @@ C:\Users\Augusto\OneDrive\Área de Trabalho\Faculdade\Orientada a Objetos\Projet
 C:\Users\Augusto\OneDrive\Área de Trabalho\Faculdade\Orientada a Objetos\ProjetoFinal\WinFormsApp\bin\Debug\net6.0-windows\PersistenceEF.pdb
 C:\Users\Augusto\OneDrive\Área de Trabalho\Faculdade\Orientada a Objetos\ProjetoFinal\WinFormsApp\obj\Debug\net6.0-windows\WinFormsApp.FormMesa.resources
 C:\Users\Augusto\OneDrive\Área de Trabalho\Faculdade\Orientada a Objetos\ProjetoFinal\WinFormsApp\obj\Debug\net6.0-windows\WinFormsApp.FormPratosAdmin.resources
+C:\Users\Augusto\OneDrive\Área de Trabalho\Faculdade\Orientada a Objetos\ProjetoFinal\WinFormsApp\obj\Debug\net6.0-windows\WinFormsApp.Menu.resources
+C:\Users\Augusto\OneDrive\Área de Trabalho\Faculdade\Orientada a Objetos\ProjetoFinal\WinFormsApp\obj\Debug\net6.0-windows\WinFormsApp.FormCaixa.resources

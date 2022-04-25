@@ -48,7 +48,7 @@
             this.tlpMain.ColumnCount = 3;
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.69579F));
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.30421F));
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 181F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tlpMain.Controls.Add(this.lbNome, 0, 1);
             this.tlpMain.Controls.Add(this.lbCpf, 0, 3);
             this.tlpMain.Controls.Add(this.lbTelefone, 0, 5);
@@ -77,7 +77,7 @@
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
-            this.tlpMain.Size = new System.Drawing.Size(785, 303);
+            this.tlpMain.Size = new System.Drawing.Size(609, 303);
             this.tlpMain.TabIndex = 0;
             // 
             // lbNome
@@ -135,7 +135,7 @@
             this.btCadastrar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btCadastrar.Location = new System.Drawing.Point(97, 263);
             this.btCadastrar.Name = "btCadastrar";
-            this.btCadastrar.Size = new System.Drawing.Size(503, 34);
+            this.btCadastrar.Size = new System.Drawing.Size(498, 34);
             this.btCadastrar.TabIndex = 5;
             this.btCadastrar.Text = "Cadastrar";
             this.btCadastrar.UseVisualStyleBackColor = true;
@@ -146,7 +146,7 @@
             this.tbNome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbNome.Location = new System.Drawing.Point(97, 18);
             this.tbNome.Name = "tbNome";
-            this.tbNome.Size = new System.Drawing.Size(503, 23);
+            this.tbNome.Size = new System.Drawing.Size(498, 23);
             this.tbNome.TabIndex = 6;
             this.tbNome.TextChanged += new System.EventHandler(this.tbNome_TextChanged);
             // 
@@ -155,7 +155,7 @@
             this.tbCpf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbCpf.Location = new System.Drawing.Point(97, 68);
             this.tbCpf.Name = "tbCpf";
-            this.tbCpf.Size = new System.Drawing.Size(503, 23);
+            this.tbCpf.Size = new System.Drawing.Size(498, 23);
             this.tbCpf.TabIndex = 7;
             // 
             // tbTelefone
@@ -163,7 +163,7 @@
             this.tbTelefone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbTelefone.Location = new System.Drawing.Point(97, 118);
             this.tbTelefone.Name = "tbTelefone";
-            this.tbTelefone.Size = new System.Drawing.Size(503, 23);
+            this.tbTelefone.Size = new System.Drawing.Size(498, 23);
             this.tbTelefone.TabIndex = 8;
             // 
             // tbEmail
@@ -171,7 +171,7 @@
             this.tbEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbEmail.Location = new System.Drawing.Point(97, 168);
             this.tbEmail.Name = "tbEmail";
-            this.tbEmail.Size = new System.Drawing.Size(503, 23);
+            this.tbEmail.Size = new System.Drawing.Size(498, 23);
             this.tbEmail.TabIndex = 9;
             // 
             // tbSenha
@@ -179,7 +179,7 @@
             this.tbSenha.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSenha.Location = new System.Drawing.Point(97, 218);
             this.tbSenha.Name = "tbSenha";
-            this.tbSenha.Size = new System.Drawing.Size(503, 23);
+            this.tbSenha.Size = new System.Drawing.Size(498, 23);
             this.tbSenha.TabIndex = 10;
             this.tbSenha.UseSystemPasswordChar = true;
             // 
@@ -187,7 +187,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(785, 303);
+            this.ClientSize = new System.Drawing.Size(609, 303);
             this.Controls.Add(this.tlpMain);
             this.Name = "FormCadastro";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

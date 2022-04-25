@@ -18,9 +18,9 @@ namespace Domain.Pedidos
 
         #region Public
         public Guid? PratoID { get; set; }
+        public string Nome { get; set; }
 
         public double SubTotal = 0;
-        public string? Nome { get; set; }
         public int? MesaNum { get; set; }
         public Guid? AgendamentoID { get; set; }
         #endregion

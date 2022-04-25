@@ -43,8 +43,6 @@ namespace WinFormsApp
             dgvProdutos.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvProdutos.Columns[5].Visible = false;
             dgvProdutos.Columns[6].Visible = false;
-            dgvProdutos.Columns[7].Visible = false;
-            dgvProdutos.Columns[8].Visible = false;
 
             dgvPratos.Columns[0].Visible = false;
             dgvPratos.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -56,7 +54,7 @@ namespace WinFormsApp
 
             _carregandoFormulario = true;
             //dgvPratos.DataSource = _pratosProdutosDAL.ObterTodos(_pessoaLogin);
-            dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodos(_pessoaLogin, null);
+            dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodos();
             dgvPratos.DataSource = _pratosDAL.ObterTodos(null);
             cbProdutos.DataSource = _produtosDAL.ObterTodos();
             cbProdutos.DisplayMember = "Nome";
@@ -96,7 +94,7 @@ namespace WinFormsApp
                                     Guid.Parse(dgvPratos.Rows[e.RowIndex].Cells[0].Value.ToString()));
 
 
-                dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodosPrato(_pratoAtual, null);
+                dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodosPrato(_pratoAtual);
 
                 btCancelar.Enabled = true;
                 btRmvProduto.Enabled = true;
@@ -117,9 +115,7 @@ namespace WinFormsApp
                         _pratoAtual == null ? null :
                         _pratoAtual.PratoID,
                         cbProdutos.SelectedItem == null ? null :
-                        (cbProdutos.SelectedItem as Produto).ProdutoID,
-                        _pessoaLogin.PessoaID,
-                        null
+                        (cbProdutos.SelectedItem as Produto).ProdutoID
                         ));
                 }
                 //_total += (cbProdutos.SelectedItem as Produto).PrecoUnitario;
@@ -136,6 +132,71 @@ namespace WinFormsApp
             {
                 MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btRmvProduto_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_pratoProdutoAtual == null)
+                {
+                    MessageBox.Show("Nenhum produto selecionado", "Sem campo de seleção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (MessageBox.Show($"Confirma remover o PRODUTO", "Dúvida",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    return;
+                //_total -= _pratosProdutosDAL.ObterValorPrato(_pratoProdutoAtual);
+                _pratosProdutosDAL.Remover(_pratoProdutoAtual);
+
+                MessageBox.Show("Registro removido", "Remoção concluída", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                InicializarFormulario();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btRmvPrato_Click(object sender, EventArgs e)
+        {
+
+            if (_pratoAtual == null)
+            {
+                MessageBox.Show("Nenhum prato selecionado.", "Sem campo de seleção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (MessageBox.Show($"Confirma remover {_pratoAtual.Nome.ToUpper()}", "Dúvida",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            if (_pratosProdutosDAL.ObterTodosPrato(_pratoAtual).Count > 0)
+            {
+                foreach (var p in _pratosProdutosDAL.ObterTodosPrato(_pratoAtual))
+                {
+                    _pratosProdutosDAL.Remover(new PratoProduto(_pratoAtual.PratoID, p.ProdutoID));
+                }
+            }
+
+            _pratosDAL.Remover(new Prato("", 0, _pratoAtual == null ? null :
+                                        _pratoAtual.PratoID));
+            InicializarFormulario();
+            MessageBox.Show("Operação realizada", "Succeso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            InicializarFormulario();
+        }
+
+        private void dgvProdutos_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_carregandoFormulario == false)
+                RegistrarPratoProdutoAtual(Guid.Parse(dgvProdutos.Rows[e.RowIndex].Cells[1].Value.ToString()));
+
+        }
+
+        private void RegistrarPratoProdutoAtual(Guid? produtoID)
+        {
+            _pratoProdutoAtual = new PratoProduto(_pratoAtual.PratoID, produtoID);
         }
     }
    

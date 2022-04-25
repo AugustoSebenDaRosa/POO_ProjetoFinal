@@ -41,7 +41,7 @@ namespace WinFormsApp
 
                 _pessoaLogin = _pessoasDAL.Login(tbEmail.Text, tbSenha.Text);
                 if (_pessoaLogin == null)
-                    throw new Exception("Senha incorreta.");
+                    throw new Exception("Senha ou email incorreto.");
 
                 MessageBox.Show("Login efetuado", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
@@ -55,9 +55,9 @@ namespace WinFormsApp
         private void VerificarErros()
         {
             if (string.IsNullOrEmpty(tbEmail.Text))
-                throw new Exception("EMAIL: Não pode ser nulo ou vazio");
+                throw new Exception("EMAIL: Não pode ser nulo ou vazio.");
             if (string.IsNullOrEmpty(tbSenha.Text))
-                throw new Exception("SENHA: Não pode ser nulo ou vazio");
+                throw new Exception("SENHA: Não pode ser nulo ou vazio.");
         }
     }
 }

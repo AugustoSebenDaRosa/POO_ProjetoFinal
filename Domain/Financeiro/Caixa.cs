@@ -2,10 +2,18 @@
 {
     public class Caixa
     {
-        public HashSet<Conta_a_Receber> ContasReceber { get; set; }
-        public HashSet<Conta_a_Pagar> ContasPagar { get; set;}
-        public double Total { get; set; }
+        public Guid? CaixaID { get; set; }
+        public Guid? AgendamentoID { get; set; }
+        public decimal Valor { get; set; }
+        public DateTime DataAgendamento { get; set; }
+        public string PessoaCPF { get; set; }
 
-
+        public Caixa(Guid? agendamentoID, decimal valor, DateTime dataAgendamento, Guid? caixaID=null)
+        {
+            CaixaID=caixaID;
+            AgendamentoID=agendamentoID;
+            Valor=valor;
+            DataAgendamento=dataAgendamento;
+        }
     }
 }

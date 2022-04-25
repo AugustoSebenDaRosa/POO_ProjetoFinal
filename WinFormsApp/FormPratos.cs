@@ -1,6 +1,8 @@
 ﻿using Domain.Common;
+using Domain.Financeiro;
 using Domain.Pedidos;
 using Domain.Persistence.DAL;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -10,18 +12,16 @@ namespace WinFormsApp
     {
 
         #region DAL
-        //private PessoaDAL _pessoasDAL = new PessoaDAL(new SqlConnection(ConfigurationManager.ConnectionStrings["Teste"].ConnectionString));
-        //private MesaDAL _mesasDAL = new MesaDAL(new SqlConnection(ConfigurationManager.ConnectionStrings["Teste"].ConnectionString));
         private ProdutoDAL _produtosDAL;
         private PratoDAL _pratosDAL;
         private PratoProdutoDAL _pratosProdutosDAL;
+        private CaixaDAL _caixaDAL;
         #endregion
 
         private SqlConnection _connection;
         private bool _carregandoFormulario = true;
         private PratoProduto _pratoProdutoAtual = null;
         private Prato _pratoAtual = null;
-        private int _numPrato = 1;
         private decimal _total = 0;
         private Pessoa _pessoaLogin = null;
         private Agendamento _agendamento = null;
@@ -33,6 +33,7 @@ namespace WinFormsApp
             _produtosDAL = new ProdutoDAL(_connection);
             _pratosDAL = new PratoDAL(_connection);
             _pratosProdutosDAL = new PratoProdutoDAL(_connection);
+            _caixaDAL = new CaixaDAL(_connection);
 
             //_pratosProdutosDAL.DeletarTodos();
 
@@ -45,7 +46,6 @@ namespace WinFormsApp
         }
         private void FormPratos_Shown(object sender, EventArgs e)
         {
-            _total = _pratosProdutosDAL.ObterValorTotal(_agendamento.AgendamentoID, _pessoaLogin.PessoaID);
 
             InicializarFormulario();
             dgvPratos.ClearSelection();
@@ -54,6 +54,7 @@ namespace WinFormsApp
             dgvPratos.Columns[0].Visible = false;
             dgvPratos.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvPratos.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvPratos.Columns[3].Visible = false;
 
 
             //dgvPratos.Columns[1].Visible = false;
@@ -66,7 +67,6 @@ namespace WinFormsApp
             //dgvPratos.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //dgvPratos.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-
             dgvProdutos.Columns[0].Visible = false;
             dgvProdutos.Columns[1].Visible = false;
             dgvProdutos.Columns[2].Visible = false;
@@ -74,33 +74,44 @@ namespace WinFormsApp
             dgvProdutos.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvProdutos.Columns[5].Visible = false;
             dgvProdutos.Columns[6].Visible = false;
-            dgvProdutos.Columns[7].Visible = false;
-            dgvProdutos.Columns[8].Visible = false;
+
+
+
         }
         private void FormPratos_Load(object sender, EventArgs e)
         {
 
         }
+       
         private void InicializarFormulario()
         {
             _carregandoFormulario = true;
-            //dgvPratos.DataSource = _pratosProdutosDAL.ObterTodos(_pessoaLogin);
-            dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodos(_pessoaLogin, _agendamento.AgendamentoID);
-            dgvPratos.DataSource = _pratosDAL.ObterTodos(_agendamento.AgendamentoID);
+            //dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodos();
+            if (_pratoAtual != null) dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodosPrato(_pratoAtual);
+            else dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodos();
+
+            dgvPratos.DataSource = _pratosDAL.ObterTodos(_agendamento);
+
+            _total = _pratosProdutosDAL.ObterValorTotal(_agendamento);
+
+            cbPratos.DataSource = _pratosDAL.ObterTodos(null);
+            cbPratos.DisplayMember = "Nome";
+            cbPratos.ValueMember = "PratoID";
+
             cbProdutos.DataSource = _produtosDAL.ObterTodos();
-            _total = _pratosProdutosDAL.ObterValorTotal(_agendamento.AgendamentoID, _pessoaLogin.PessoaID);
             cbProdutos.DisplayMember = "Nome";
             cbProdutos.ValueMember = "ProdutoID";
+
             btCancelar.Enabled = false;
             lbValor.Text = _total.ToString();
             //btRemover.Enabled = false;
             _pratoProdutoAtual = null;
             dgvPratos.ClearSelection();
             //tbNome.Clear();
-            //cbPratos.SelectedIndex = -1;
+            cbPratos.SelectedIndex = -1;
             cbProdutos.SelectedIndex = -1;
-            _carregandoFormulario = false;
             cbProdutos.Focus();
+            _carregandoFormulario = false;
         }
 
         private void btAdicionar_Click(object sender, EventArgs e)
@@ -113,12 +124,10 @@ namespace WinFormsApp
                         _pratoAtual == null ? null :
                         _pratoAtual.PratoID,
                         cbProdutos.SelectedItem == null ? null :
-                        (cbProdutos.SelectedItem as Produto).ProdutoID,
-                        _pessoaLogin.PessoaID,
-                        _agendamento.AgendamentoID
+                        (cbProdutos.SelectedItem as Produto).ProdutoID
                         ));
+                    _total += (cbProdutos.SelectedItem as Produto).PrecoUnitario;
                 }
-                _total += (cbProdutos.SelectedItem as Produto).PrecoUnitario;
                 //_pratosProdutosDAL.Gravar(new Item(tbNome.Text,
                 //                       cbPessoas.SelectedItem == null ? null :
                 //                       (cbPessoas.SelectedItem as Pessoa).PessoaID,
@@ -157,7 +166,7 @@ namespace WinFormsApp
                 MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    
+
 
         private void dgvPratos_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
@@ -168,8 +177,7 @@ namespace WinFormsApp
                                     int.Parse(dgvPratos.Rows[e.RowIndex].Cells[2].Value.ToString()),
                                     Guid.Parse(dgvPratos.Rows[e.RowIndex].Cells[0].Value.ToString()));
 
-
-                dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodosPrato(_pratoAtual, _agendamento.AgendamentoID);
+                dgvProdutos.DataSource = _pratosProdutosDAL.ObterTodosPrato(_pratoAtual);
                 //cbPratos.SelectedIndex = cbPratos.Items.IndexOf(_pratosProdutosDAL.ObterPratoPeloID(_pratoProdutoAtual));
                 //cbProdutos.SelectedIndex = cbProdutos.Items.IndexOf(_pratosProdutosDAL.ObterPodutoPeloID(_pratoProdutoAtual));
                 btCancelar.Enabled = true;
@@ -187,7 +195,24 @@ namespace WinFormsApp
         {
             try
             {
-                _pratosDAL.Gravar(new Prato("Prato 0"+_numPrato++, 1));
+                if (cbPratos.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Nenhum prato selecionado.", "Sem campo de seleção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                IReadOnlyCollection<PratoProduto> _aux = _pratosProdutosDAL.ObterTodosPrato(new Prato(null, null,
+                                                                (cbPratos.SelectedItem as Prato).PratoID, null));
+                var _pratoAux = new Prato((cbPratos.SelectedItem as Prato).Nome, _agendamento.MesaNum,
+                                            Guid.NewGuid(), _agendamento.AgendamentoID);
+                _pratosDAL.Gravar(_pratoAux);
+
+                foreach (var p in _aux)
+                {
+                    _pratosProdutosDAL.Gravar(new PratoProduto(_pratoAux.PratoID, p.ProdutoID));
+                }
+
+
 
                 MessageBox.Show("Registro gravado", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 InicializarFormulario();
@@ -204,13 +229,21 @@ namespace WinFormsApp
 
             if (_pratoAtual == null)
             {
-                MessageBox.Show("Nenhum prato selecionado", "Sem campo de seleção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Nenhum prato selecionado.", "Sem campo de seleção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (MessageBox.Show($"Confirma removar {_pratoAtual.Nome.ToUpper()}", "Dúvida",
+            if (MessageBox.Show($"Confirma remover {_pratoAtual.Nome.ToUpper()}", "Dúvida",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
+
+            if(_pratosProdutosDAL.ObterTodosPrato(_pratoAtual).Count > 0)
+            {
+                foreach(var p in _pratosProdutosDAL.ObterTodosPrato(_pratoAtual))
+                {
+                    _pratosProdutosDAL.Remover(new PratoProduto(_pratoAtual.PratoID, p.ProdutoID));
+                }
+            }
 
             _pratosDAL.Remover(new Prato("", 0, _pratoAtual == null ? null :
                                         _pratoAtual.PratoID));
@@ -219,25 +252,30 @@ namespace WinFormsApp
             InicializarFormulario();
         }
 
-        //private void cbPratos_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-
-        //}
 
         private void dgvProdutos_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            RegistrarPratoProdutoAtual(Guid.Parse(dgvProdutos.Rows[e.RowIndex].Cells[1].Value.ToString()));
-
+            if (!_carregandoFormulario)
+                RegistrarPratoProdutoAtual(Guid.Parse(dgvProdutos.Rows[e.RowIndex].Cells[1].Value.ToString()));
         }
 
         private void RegistrarPratoProdutoAtual(Guid? produtoID)
         {
-            _pratoProdutoAtual = new PratoProduto(_pratoAtual.PratoID, produtoID, _pessoaLogin.PessoaID, _agendamento.AgendamentoID);
+            if(_pratoAtual!=null)
+                _pratoProdutoAtual = new PratoProduto(_pratoAtual.PratoID, produtoID);
         }
 
         private void btCancelar_Click(object sender, EventArgs e)
         {
             InicializarFormulario();
+        }
+
+        private void btPagar_Click(object sender, EventArgs e)
+        {
+            _caixaDAL.Inserir(new Caixa(_agendamento.AgendamentoID, _total, DateTime.Now));
+            MessageBox.Show("Valor pago!");
+            _total = 0;
+            lbValor.Text = "0";
         }
     }
 }

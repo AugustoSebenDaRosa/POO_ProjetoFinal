@@ -39,10 +39,13 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btAddPrato = new System.Windows.Forms.Button();
             this.btRmvPrato = new System.Windows.Forms.Button();
+            this.cbPratos = new System.Windows.Forms.ComboBox();
             this.lbTotal = new System.Windows.Forms.Label();
             this.tlpFinal = new System.Windows.Forms.TableLayoutPanel();
             this.lbValor = new System.Windows.Forms.Label();
+            this.btPagar = new System.Windows.Forms.Button();
             this.dgvProdutos = new System.Windows.Forms.DataGridView();
+            this.lbPrato = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPratos)).BeginInit();
             this.tlpBotoes.SuspendLayout();
@@ -65,17 +68,19 @@
             this.tableLayoutPanel1.Controls.Add(this.lbTotal, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.tlpFinal, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.dgvProdutos, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lbPrato, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 370);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 382);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // lbProduto
@@ -172,6 +177,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.Controls.Add(this.btAddPrato, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btRmvPrato, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cbPratos, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(83, 13);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -183,9 +189,9 @@
             // btAddPrato
             // 
             this.btAddPrato.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btAddPrato.Location = new System.Drawing.Point(156, 3);
+            this.btAddPrato.Location = new System.Drawing.Point(157, 3);
             this.btAddPrato.Name = "btAddPrato";
-            this.btAddPrato.Size = new System.Drawing.Size(147, 28);
+            this.btAddPrato.Size = new System.Drawing.Size(148, 28);
             this.btAddPrato.TabIndex = 4;
             this.btAddPrato.Text = "Adicionar Prato";
             this.btAddPrato.UseVisualStyleBackColor = true;
@@ -194,13 +200,23 @@
             // btRmvPrato
             // 
             this.btRmvPrato.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btRmvPrato.Location = new System.Drawing.Point(309, 3);
+            this.btRmvPrato.Location = new System.Drawing.Point(311, 3);
             this.btRmvPrato.Name = "btRmvPrato";
-            this.btRmvPrato.Size = new System.Drawing.Size(150, 28);
+            this.btRmvPrato.Size = new System.Drawing.Size(148, 28);
             this.btRmvPrato.TabIndex = 5;
             this.btRmvPrato.Text = "Remover Prato";
             this.btRmvPrato.UseVisualStyleBackColor = true;
             this.btRmvPrato.Click += new System.EventHandler(this.btRmvPrato_Click);
+            // 
+            // cbPratos
+            // 
+            this.cbPratos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbPratos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPratos.FormattingEnabled = true;
+            this.cbPratos.Location = new System.Drawing.Point(3, 5);
+            this.cbPratos.Name = "cbPratos";
+            this.cbPratos.Size = new System.Drawing.Size(148, 23);
+            this.cbPratos.TabIndex = 6;
             // 
             // lbTotal
             // 
@@ -219,6 +235,7 @@
             this.tlpFinal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpFinal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpFinal.Controls.Add(this.lbValor, 0, 0);
+            this.tlpFinal.Controls.Add(this.btPagar, 1, 0);
             this.tlpFinal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpFinal.Location = new System.Drawing.Point(83, 333);
             this.tlpFinal.Name = "tlpFinal";
@@ -237,6 +254,17 @@
             this.lbValor.TabIndex = 0;
             this.lbValor.Text = "R$0,00.";
             // 
+            // btPagar
+            // 
+            this.btPagar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btPagar.Location = new System.Drawing.Point(157, 3);
+            this.btPagar.Name = "btPagar";
+            this.btPagar.Size = new System.Drawing.Size(148, 38);
+            this.btPagar.TabIndex = 1;
+            this.btPagar.Text = "Pagar";
+            this.btPagar.UseVisualStyleBackColor = true;
+            this.btPagar.Click += new System.EventHandler(this.btPagar_Click);
+            // 
             // dgvProdutos
             // 
             this.dgvProdutos.AllowUserToAddRows = false;
@@ -252,11 +280,21 @@
             this.dgvProdutos.TabIndex = 12;
             this.dgvProdutos.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProdutos_RowEnter);
             // 
+            // lbPrato
+            // 
+            this.lbPrato.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbPrato.AutoSize = true;
+            this.lbPrato.Location = new System.Drawing.Point(39, 22);
+            this.lbPrato.Name = "lbPrato";
+            this.lbPrato.Size = new System.Drawing.Size(38, 15);
+            this.lbPrato.TabIndex = 13;
+            this.lbPrato.Text = "Prato:";
+            // 
             // FormPratos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 370);
+            this.ClientSize = new System.Drawing.Size(800, 382);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormPratos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -292,5 +330,8 @@
         private TableLayoutPanel tlpFinal;
         private Label lbValor;
         private DataGridView dgvProdutos;
+        private ComboBox cbPratos;
+        private Label lbPrato;
+        private Button btPagar;
     }
 }

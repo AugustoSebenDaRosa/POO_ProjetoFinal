@@ -14,7 +14,7 @@ namespace Domain.Common
             CPF = cpf;
             Senha = senha;
             PessoaID = pessoaID;
-            //base.applyValidations();
+            base.applyValidations();
         }
         #endregion
 

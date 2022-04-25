@@ -22,6 +22,7 @@ namespace Domain.Pedidos
         public DateTime DataHora { get; set; }
         public int? MesaNum { get; set; }
         public Guid? PessoaID { get; set; }
+        public decimal Valor { get; set; }
 
         #endregion
 

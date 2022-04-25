@@ -6,6 +6,7 @@ namespace Domain.Persistence.DAL
     public class PratoDAL
     {
         private SqlConnection _sqlConnection { get; set; }
+        private SqlCommand _command;
         public PratoDAL(SqlConnection sqlConnection)
         {
             _sqlConnection = sqlConnection;
@@ -18,9 +19,9 @@ namespace Domain.Persistence.DAL
             _sqlConnection.Open();
             SqlCommand command = _sqlConnection.CreateCommand();
             command.CommandText =
-                "insert into TB_PRATO(PratoID, Nome, MesaNum, AgendamentoID)" +
+                "insert into TB_PRATO(PratoID, Nome, MesaNum, AgendamentoID) " +
                 "values(@pratoID, @nome, @mesaNum, @agendamentoID)";
-            command.Parameters.AddWithValue("@pratoID", Guid.NewGuid());
+            command.Parameters.AddWithValue("@pratoID", prato.PratoID);
             command.Parameters.AddWithValue("@nome", prato.Nome);
             command.Parameters.AddWithValue("@mesaNum", prato.MesaNum);
             command.Parameters.AddWithValue("@agendamentoID", prato.AgendamentoID);
@@ -43,18 +44,28 @@ namespace Domain.Persistence.DAL
             _sqlConnection.Close();
         }
 
-        public IReadOnlyCollection<Prato> ObterTodos(Guid? agendamentoID)
+        public IReadOnlyCollection<Prato> ObterTodos(Agendamento agendamento)
         {
             List<Prato> pratos = new List<Prato>();
-
+            
             _sqlConnection.Open();
-            var command = new SqlCommand("Select PratoID, Nome, MesaNum, AgendamentoID from TB_PRATO " +
-                "WHERE AgendamentoID IS null OR AgendamentoID = @agendamentoID " +
-                "Order By Nome"
-                , _sqlConnection);
-            command.Parameters.AddWithValue("@agendamentoID", agendamentoID == null ? DBNull.Value : agendamentoID);
+            if (agendamento == null)
+            {
+               _command = new SqlCommand("Select PratoID, Nome, MesaNum, AgendamentoID from TB_PRATO " +
+                    "WHERE AgendamentoID IS null " +
+                    "Order By Nome"
+                    , _sqlConnection);
+            }
+            else
+            {
+                _command = new SqlCommand("Select PratoID, Nome, MesaNum, AgendamentoID from TB_PRATO " +
+                    "WHERE AgendamentoID = @agendamentoID " +
+                    "Order By Nome"
+                    , _sqlConnection);
+                _command.Parameters.AddWithValue("@agendamentoID", agendamento == null ? DBNull.Value : agendamento.AgendamentoID);
+            }
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = _command.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -68,6 +79,7 @@ namespace Domain.Persistence.DAL
             _sqlConnection.Close();
             return pratos.AsReadOnly();
         }
+
 
         //public Pessoa ObterPeloID(Guid? pessoaID)
         //{
@@ -93,14 +105,7 @@ namespace Domain.Persistence.DAL
         {
             if (string.IsNullOrEmpty(prato.Nome) && prato.MesaNum == null)
                 throw new Exception("Nome não pode ser em branco ou mesa não pode ser nula.");
-            if (prato.PratoID == null)
-            {
-                Inserir(prato);
-            }
-            else
-            {
-                Atualizar(prato);
-            }
+            Inserir(prato);
         }
 
         public void Remover(Prato prato)

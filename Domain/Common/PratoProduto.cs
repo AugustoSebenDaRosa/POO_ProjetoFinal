@@ -11,14 +11,10 @@ namespace Domain.Common
         public decimal Preco { get; set; }
         public Produto Produto { get; set; }
         public Prato Prato { get; set; }
-        public Guid? PessoaID { get; set; }
-        public Guid? AgendamentoID { get; set; }
-        public PratoProduto(Guid? pratoID, Guid? produtoID, Guid? pessoaID, Guid? agendamentoID)
+        public PratoProduto(Guid? pratoID, Guid? produtoID)
         {
             PratoID = pratoID;
             ProdutoID = produtoID;
-            PessoaID = pessoaID;
-            AgendamentoID = agendamentoID;
         }
 
         public override bool Equals(object? obj)

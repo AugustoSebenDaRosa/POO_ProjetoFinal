@@ -19,40 +19,32 @@ namespace Domain.Persistence.DAL
             _sqlConnection.Open();
             SqlCommand command = _sqlConnection.CreateCommand();
             command.CommandText =
-                "insert into TB_PRATO_PRODUTO(PratoID, ProdutoID, PessoaID, AgendamentoID)" +
-                "values(@pratoID, @produtoID, @pessoaID, @agendamentoID)";
+                "insert into TB_PRATO_PRODUTO(PratoID, ProdutoID)" +
+                "values(@pratoID, @produtoID)";
             command.Parameters.AddWithValue("@pratoID", pratoProduto.PratoID);
             command.Parameters.AddWithValue("@produtoID", pratoProduto.ProdutoID);
-            command.Parameters.AddWithValue("@pessoaID", pratoProduto.PessoaID);
-            command.Parameters.AddWithValue("@agendamentoID", (pratoProduto.AgendamentoID == null) ? DBNull.Value : pratoProduto.AgendamentoID);
             command.ExecuteNonQuery();
             _sqlConnection.Close();
         }
 
-        public IReadOnlyCollection<PratoProduto> ObterTodos(Pessoa pessoa, Guid? agendamentoID)
+        public IReadOnlyCollection<PratoProduto> ObterTodos()
         {
             List<PratoProduto> pratoProdutos = new List<PratoProduto>();
 
             _sqlConnection.Open();
             var command = new SqlCommand(
-                "SELECT TB_PRATO_PRODUTO.PratoID, TB_PRATO_PRODUTO.ProdutoID, TB_PRATO.Nome, TB_PRODUTO.Nome, TB_PRODUTO.PrecoUnitario, " +
-                "TB_PRATO_PRODUTO.PessoaID, TB_PRATO_PRODUTO.AgendamentoID " +
+                "SELECT TB_PRATO_PRODUTO.PratoID, TB_PRATO_PRODUTO.ProdutoID, TB_PRATO.Nome, TB_PRODUTO.Nome, TB_PRODUTO.PrecoUnitario " +
                 "FROM TB_PRATO_PRODUTO " +
                 "INNER JOIN TB_PRATO ON TB_PRATO_PRODUTO.PratoID = TB_PRATO.PratoID " +
                 "INNER JOIN TB_PRODUTO on TB_PRATO_PRODUTO.ProdutoID = TB_PRODUTO.ProdutoID " +
-                "WHERE TB_PRATO_PRODUTO.PessoaID = @pessoaID AND " +
-                "TB_PRATO_PRODUTO.AgendamentoID is null or TB_PRATO_PRODUTO.AgendamentoID = @agendamentoID " +
                 "ORDER BY TB_PRATO.Nome",
                 _sqlConnection);
-            command.Parameters.AddWithValue("@pessoaID", pessoa.PessoaID);
-            command.Parameters.AddWithValue("@agendamentoID", (agendamentoID == null) ? DBNull.Value : agendamentoID);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    var pratoProduto = new PratoProduto(reader.GetGuid(0), reader.GetGuid(1), reader.GetGuid(5),
-                                                        reader.IsDBNull(6) ? null : reader.GetGuid(6));
+                    var pratoProduto = new PratoProduto(reader.GetGuid(0), reader.GetGuid(1));
                     pratoProduto.PratoNome = reader.GetString(2);
                     pratoProduto.Nome = reader.GetString(3);
                     pratoProduto.Preco = reader.GetDecimal(4);
@@ -65,30 +57,26 @@ namespace Domain.Persistence.DAL
             _sqlConnection.Close();
             return pratoProdutos.AsReadOnly();
         }
-        public IReadOnlyCollection<PratoProduto> ObterTodosPrato(Prato prato, Guid? agendamentoID)
+        public IReadOnlyCollection<PratoProduto> ObterTodosPrato(Prato prato)
         {
             List<PratoProduto> pratoProdutos = new List<PratoProduto>();
 
             _sqlConnection.Open();
             var command = new SqlCommand(
-                "SELECT TB_PRATO_PRODUTO.PratoID, TB_PRATO_PRODUTO.ProdutoID, TB_PRATO.Nome, TB_PRODUTO.Nome, TB_PRODUTO.PrecoUnitario, " +
-                "TB_PRATO_PRODUTO.PessoaID, TB_PRATO_PRODUTO.AgendamentoID " +
+                "SELECT TB_PRATO_PRODUTO.PratoID, TB_PRATO_PRODUTO.ProdutoID, TB_PRATO.Nome, TB_PRODUTO.Nome, TB_PRODUTO.PrecoUnitario " +
                 "FROM TB_PRATO_PRODUTO " +
                 "INNER JOIN TB_PRATO ON TB_PRATO_PRODUTO.PratoID = TB_PRATO.PratoID " +
                 "INNER JOIN TB_PRODUTO on TB_PRATO_PRODUTO.ProdutoID = TB_PRODUTO.ProdutoID " +
-                "WHERE TB_PRATO_PRODUTO.PratoID = @pratoID AND " +
-                "TB_PRATO_PRODUTO.AgendamentoID is null or TB_PRATO_PRODUTO.AgendamentoID = @agendamentoID " +
+                "WHERE TB_PRATO_PRODUTO.PratoID = @pratoID " +
                 "ORDER BY TB_PRATO.Nome",
                 _sqlConnection);
             command.Parameters.AddWithValue("@pratoID", prato.PratoID);
-            command.Parameters.AddWithValue("@agendamentoID", (agendamentoID == null) ? DBNull.Value : agendamentoID);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    var pratoProduto = new PratoProduto(reader.GetGuid(0), reader.GetGuid(1), reader.GetGuid(5),
-                                                        reader.IsDBNull(6) ? null : reader.GetGuid(6));
+                    var pratoProduto = new PratoProduto(reader.GetGuid(0), reader.GetGuid(1));
                     pratoProduto.PratoNome = reader.GetString(2);
                     pratoProduto.Nome = reader.GetString(3);
                     pratoProduto.Preco = reader.GetDecimal(4);
@@ -141,7 +129,7 @@ namespace Domain.Persistence.DAL
             return produto;
         }
 
-        public decimal ObterValorTotal(Guid? agendamentoID, Guid? pessoaID)
+        public decimal ObterValorTotal(Agendamento agendamento)
         {
             decimal valorTotal = 0;
 
@@ -151,11 +139,9 @@ namespace Domain.Persistence.DAL
                 "FROM TB_PRATO_PRODUTO " +
                 "INNER JOIN TB_PRATO ON TB_PRATO_PRODUTO.PratoID = TB_PRATO.PratoID " +
                 "INNER JOIN TB_PRODUTO on TB_PRATO_PRODUTO.ProdutoID = TB_PRODUTO.ProdutoID " +
-                "WHERE TB_PRATO_PRODUTO.AgendamentoID = @agendamentoID AND " +
-                "TB_PRATO_PRODUTO.PessoaID = @pessoaID",
+                "WHERE TB_PRATO.AgendamentoID = @agendamentoID ",
                 _sqlConnection);
-            command.Parameters.AddWithValue("@agendamentoID", agendamentoID);
-            command.Parameters.AddWithValue("@pessoaID", pessoaID);
+            command.Parameters.AddWithValue("@agendamentoID", agendamento.AgendamentoID);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {

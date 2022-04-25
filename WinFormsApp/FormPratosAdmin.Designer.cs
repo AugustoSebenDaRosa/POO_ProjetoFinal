@@ -124,6 +124,7 @@
             this.btRmvPrato.TabIndex = 1;
             this.btRmvPrato.Text = "Remover Prato";
             this.btRmvPrato.UseVisualStyleBackColor = true;
+            this.btRmvPrato.Click += new System.EventHandler(this.btRmvPrato_Click);
             // 
             // tbPratoNome
             // 
@@ -190,6 +191,7 @@
             this.btRmvProduto.TabIndex = 1;
             this.btRmvProduto.Text = "Remover Produto";
             this.btRmvProduto.UseVisualStyleBackColor = true;
+            this.btRmvProduto.Click += new System.EventHandler(this.btRmvProduto_Click);
             // 
             // btCancelar
             // 
@@ -228,6 +230,7 @@
             this.dgvProdutos.RowTemplate.Height = 25;
             this.dgvProdutos.Size = new System.Drawing.Size(239, 434);
             this.dgvProdutos.TabIndex = 6;
+            this.dgvProdutos.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProdutos_RowEnter);
             // 
             // FormPratosAdmin
             // 

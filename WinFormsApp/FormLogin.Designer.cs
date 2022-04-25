@@ -41,10 +41,10 @@
             // tlpMain
             // 
             this.tlpMain.ColumnCount = 4;
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.83413F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.16587F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tlpMain.Controls.Add(this.lbLogin, 1, 1);
             this.tlpMain.Controls.Add(this.lbEmail, 1, 2);
             this.tlpMain.Controls.Add(this.lbSenha, 1, 4);
@@ -55,22 +55,22 @@
             this.tlpMain.Location = new System.Drawing.Point(0, 0);
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 8;
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tlpMain.Size = new System.Drawing.Size(800, 362);
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpMain.Size = new System.Drawing.Size(529, 225);
             this.tlpMain.TabIndex = 0;
             // 
             // lbLogin
             // 
             this.lbLogin.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lbLogin.AutoSize = true;
-            this.lbLogin.Location = new System.Drawing.Point(114, 102);
+            this.lbLogin.Location = new System.Drawing.Point(23, 32);
             this.lbLogin.Name = "lbLogin";
             this.lbLogin.Size = new System.Drawing.Size(37, 15);
             this.lbLogin.TabIndex = 0;
@@ -80,7 +80,7 @@
             // 
             this.lbEmail.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lbEmail.AutoSize = true;
-            this.lbEmail.Location = new System.Drawing.Point(114, 142);
+            this.lbEmail.Location = new System.Drawing.Point(23, 72);
             this.lbEmail.Name = "lbEmail";
             this.lbEmail.Size = new System.Drawing.Size(39, 15);
             this.lbEmail.TabIndex = 1;
@@ -90,7 +90,7 @@
             // 
             this.lbSenha.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lbSenha.AutoSize = true;
-            this.lbSenha.Location = new System.Drawing.Point(114, 192);
+            this.lbSenha.Location = new System.Drawing.Point(23, 122);
             this.lbSenha.Name = "lbSenha";
             this.lbSenha.Size = new System.Drawing.Size(42, 15);
             this.lbSenha.TabIndex = 2;
@@ -99,7 +99,7 @@
             // tbEmail
             // 
             this.tbEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbEmail.Location = new System.Drawing.Point(194, 138);
+            this.tbEmail.Location = new System.Drawing.Point(103, 68);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(394, 23);
             this.tbEmail.TabIndex = 3;
@@ -107,7 +107,7 @@
             // tbSenha
             // 
             this.tbSenha.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSenha.Location = new System.Drawing.Point(194, 188);
+            this.tbSenha.Location = new System.Drawing.Point(103, 118);
             this.tbSenha.Name = "tbSenha";
             this.tbSenha.Size = new System.Drawing.Size(394, 23);
             this.tbSenha.TabIndex = 4;
@@ -116,7 +116,7 @@
             // btLogin
             // 
             this.btLogin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btLogin.Location = new System.Drawing.Point(194, 233);
+            this.btLogin.Location = new System.Drawing.Point(103, 163);
             this.btLogin.Name = "btLogin";
             this.btLogin.Size = new System.Drawing.Size(394, 34);
             this.btLogin.TabIndex = 5;
@@ -128,7 +128,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 362);
+            this.ClientSize = new System.Drawing.Size(529, 225);
             this.Controls.Add(this.tlpMain);
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

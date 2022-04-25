@@ -40,9 +40,10 @@ namespace WinFormsApp
             dgvMesa.Columns[1].Visible = false;
             dgvMesa.Columns[2].Visible = false;
             dgvMesa.Columns[3].Visible = false;
-            dgvMesa.Columns[6].Visible = false;
             dgvMesa.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvMesa.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvMesa.Columns[6].Visible = false;
+            dgvMesa.Columns[7].Visible = false;
         }
         private void InicializarFormulario()
         {
